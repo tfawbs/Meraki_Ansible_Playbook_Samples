@@ -1,0 +1,47 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Clone Network
+      cisco.meraki.networks:
+        state: present
+        organizationId: #######
+        name: Clone
+        notes: Cloned_with_anisble
+        copyFromNetworkId: L_#################
+        productTypes:           
+          - appliance
+          - wireless
+        timeZone: Australia/Sydney
+      register: create_network
+
+    - name: Change VLAN Subnets to make it unqiue
+      cisco.meraki.networks_appliance_vlans:
+        state: present
+        id: '10'
+        vlanId: 10
+        applianceIp: 10.10.40.1
+        cidr: 10.10.40.0/24
+        name: Management
+        networkId: "{{ create_network.meraki_response.id }}"
+        subnet: 10.10.40.0/24
+
+    - name: Enable Cloned Network as a Spoke
+      cisco.meraki.networks_appliance_vpn_site_to_site_vpn:
+        state: present
+        hubs:
+        - hubId: L_#################
+        mode: spoke
+        networkId: "{{ create_network.meraki_response.id }}"
+
+    - name: Update VPN NAT Translation Subnet
+      cisco.meraki.networks_appliance_vlans:
+        state: present
+        id: '10'
+        vlanId: 10
+        applianceIp: 10.10.40.1
+        cidr: 10.10.40.0/24
+        name: Management
+        networkId: "{{ create_network.meraki_response.id }}"
+        subnet: 10.10.40.0/24
+        vpnNatSubnet: 192.168.40.0/24 
