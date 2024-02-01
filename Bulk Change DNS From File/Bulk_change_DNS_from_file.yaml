@@ -6,7 +6,7 @@
 - hosts: localhost
   gather_facts: false
   vars:
-    org_id: "1104491"
+    org_id: "#######"
   tasks:
     - name: Include vars of devices.yaml into the 'devices' variable 
       include_vars:
