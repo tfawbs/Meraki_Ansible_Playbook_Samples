@@ -1,4 +1,7 @@
 ---
+#Conceptually this play is designed to copy a Template network where VPN NAT Translation is already configured
+#Then change the subnets, then enable VPN, and now VPN is enabled change the VPN NAT Translation subnet
+#As of 2/2/24 there are no APIs to configure VPN NAT Translation settings, logically configure it in a template for scaleable deployment
 - hosts: localhost
   gather_facts: false
   tasks:
@@ -14,6 +17,8 @@
           - wireless
         timeZone: Australia/Sydney
       register: create_network
+      #This Task will clone a network from the source detailed in copyFromNetworkId value
+      #Secondly is important to register the output as we need the new Network ID for later tasks
 
     - name: Change VLAN Subnets to make it unqiue
       cisco.meraki.networks_appliance_vlans:
@@ -25,6 +30,8 @@
         name: Management
         networkId: "{{ create_network.meraki_response.id }}"
         subnet: 10.10.40.0/24
+      #This task will change the current Subnet to make it unquie so we can enable a unquie subnet in the SDWAN
+      #You should do this task for every subnet you are going to enable
 
     - name: Enable Cloned Network as a Spoke
       cisco.meraki.networks_appliance_vpn_site_to_site_vpn:
@@ -33,6 +40,8 @@
         - hubId: L_#################
         mode: spoke
         networkId: "{{ create_network.meraki_response.id }}"
+      #This task will enable the MX as a spoke 
+      #The hubId value is just the Network ID of the network with the hub in it, (L_### or N_###)
 
     - name: Update VPN NAT Translation Subnet
       cisco.meraki.networks_appliance_vlans:
@@ -45,3 +54,4 @@
         networkId: "{{ create_network.meraki_response.id }}"
         subnet: 10.10.40.0/24
         vpnNatSubnet: 192.168.40.0/24 
+      #This task will now go back and useing the vpnNatSubnet will set the subnet used for VPN NAT Translation
