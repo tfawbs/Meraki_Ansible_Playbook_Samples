@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Change management information
+      cisco.meraki.devices_management_interface:
+        state: present
+        serial: Q3AJ-####-####
+        wan1:
+          usingStaticIp: true
+          staticIp: 192.168.20.181
+          staticSubnetMask: 255.255.255.0
+          staticGatewayIp: 192.168.20.1
+          staticDns:
+          - 192.168.20.2
+          - 8.8.8.8
+
+

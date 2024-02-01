@@ -1,0 +1,13 @@
+---
+# This simple play will claim a device in a network that in this case was configued in the opening variables
+- hosts: localhost
+  vars:
+    network_id: "L_##################" 
+  gather_facts: false
+  tasks:
+    - name: Claim Device into the Network
+      cisco.meraki.networks_devices_claim:
+        meraki_output_log: true
+        networkId: "{{network_id}}"
+        serials:
+        - Q3AA-####-####
