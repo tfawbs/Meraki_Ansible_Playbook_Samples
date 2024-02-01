@@ -14,6 +14,6 @@
         networkId: L_#########
         subnet: 10.100.30.0/24
         vpnNatSubnet: 192.168.1.0/24 
-        #The vpnNatSubnet line will configure the subnet value for the Site to Site VPN NAT Translation 
-        #But only if it was enabled prior in Dashboard
-        #As of 2/2/24 are no APIs to configure the VPN NAT Translation setttings so you will need to enable that prior
+        # The vpnNatSubnet line will configure the subnet value for the Site to Site VPN NAT Translation 
+        # But only if it was enabled prior in Dashboard
+        # As of 2/2/24 are no APIs to configure the VPN NAT Translation setttings so you will need to enable that prior
