@@ -1,4 +1,6 @@
 ---
+# This task will configure a devices Management interface details, ie, IP, Subnet Mask, Gateway, DNS
+# You could use it to update deviecs DNS settings or set devices back to DHCP or to Static IP
 - hosts: localhost
   gather_facts: false
   tasks:

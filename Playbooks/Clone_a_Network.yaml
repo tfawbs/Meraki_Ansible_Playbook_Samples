@@ -1,4 +1,5 @@
 ---
+# Notes: This Task will clone a network from the source detailed in copyFromNetworkId value
 - hosts: localhost
   gather_facts: false
   tasks:
@@ -14,6 +15,5 @@
           - wireless
         timeZone: Australia/Sydney
       register: create_network
-      # This Task will clone a network from the source detailed in copyFromNetworkId value
       # Register the output if you need the new Network ID for later tasks, you can then call it later with the next line
       # networkId: "{{ create_network.meraki_response.id }}"
