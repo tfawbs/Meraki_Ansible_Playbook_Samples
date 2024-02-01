@@ -1,4 +1,5 @@
 ---
+#Notes:
 #Conceptually this play is designed to copy a Template network where VPN NAT Translation is already configured
 #Then change the subnets, then enable VPN, and now VPN is enabled change the VPN NAT Translation subnet
 #As of 2/2/24 there are no APIs to configure VPN NAT Translation settings, logically configure it in a template for scaleable deployment
