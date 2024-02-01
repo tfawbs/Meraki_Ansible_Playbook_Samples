@@ -1,0 +1,17 @@
+---
+# Notes: This task will create a network in the specified organizationId, 
+# It will make it with the set product types, and any other values set
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Create Network
+      cisco.meraki.networks:
+        state: present
+        organizationId: #######
+        name: Made With Ansible
+        notes: Made_With_Anisble
+        productTypes:           
+          - switch
+          - appliance
+          - wireless
+        timeZone: Australia/Sydney
