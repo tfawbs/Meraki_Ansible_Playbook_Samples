@@ -1,12 +1,9 @@
 ---
 device-1:
-  serial_no: Q3AA-W57S-YE46
+  serial_no: Q3AA-####-####
 
 device-2:
-  serial_no: Q3AJ-QNTK-W37C
+  serial_no: Q3AJ-####-####
 
 device-3:
-  serial_no: Q2LD-HHW5-5TXM
-
-
-  
+  serial_no: Q2LD-####-####
