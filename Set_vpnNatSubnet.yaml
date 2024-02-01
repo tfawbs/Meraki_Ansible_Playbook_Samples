@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  vars:
+
+  tasks:
+    - name: Create Management Subnet
+      cisco.meraki.networks_appliance_vlans:
+        state: present
+        id: '10'
+        vlanId: 10
+        applianceIp: 10.100.30.1
+        cidr: 10.100.30.0/24
+        name: Management
+        networkId: L_819655132181438846
+        subnet: 10.100.30.0/24
+        vpnNatSubnet: 192.168.1.0/24 
+        #This will configure the subnet value for the Site to Site VPN NAT Translation 
+        #but only if it was enabled prior in Dashboard
