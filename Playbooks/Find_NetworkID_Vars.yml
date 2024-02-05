@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  vars_prompt:
+    - name: "org_id"
+      prompt: "What is the Org ID"
+#      default: "#######"
+    - name: "network_name"
+      prompt: "What is the name of the Network (This is Case Sensitive)"
+      default: "Melbourne"
+
+  tasks:
+    - name: Get all networks
+      cisco.meraki.networks_info:
+        organizationId: "{{ org_id }}"
+      register: result
+
+    - name: Output Network ID for Network
+      ansible.builtin.debug:
+        msg: "{{ result | community.general.json_query('meraki_response[?name==`' + network_name + '`].id') | join(', ') }}"
+        #The value of Name is Case Sensitive
