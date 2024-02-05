@@ -1,4 +1,5 @@
 ---
+# Notes: This playbook is designed to get your the Network ID of a network, simply change the name on line 14
 - hosts: localhost
   gather_facts: false
 

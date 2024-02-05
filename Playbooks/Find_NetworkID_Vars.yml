@@ -1,4 +1,6 @@
 ---
+# Notes: This playbook is designed to get your the Network ID of a network by prompting you for your Org ID and the 
+# network name of the network your interested in
 - hosts: localhost
   gather_facts: false
 
