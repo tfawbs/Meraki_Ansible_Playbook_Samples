@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Get MX Info
+      cisco.meraki.devices_management_interface_info:
+        serial: Q3##-####-####
+      register: result
+
+    - name: Show MX DDNS
+      ansible.builtin.debug:
+        msg: "{{ result | json_query('meraki_response.ddnsHostnames.activeDdnsHostname') }}"
