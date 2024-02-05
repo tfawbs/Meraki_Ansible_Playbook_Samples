@@ -19,4 +19,4 @@
     - name: Output Network ID for Network
       ansible.builtin.debug:
         msg: "{{ result | community.general.json_query('meraki_response[?name==`' + network_name + '`].id') | join(', ') }}"
-        #The value of Name is Case Sensitive
+        #The Network Name is Case Sensitive
