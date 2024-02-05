@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Get all networks
+      cisco.meraki.networks_info:
+        organizationId: "#######"
+      register: result
+
+    - name: Output Network ID for Network
+      ansible.builtin.debug:
+        msg: "{{ result | community.general.json_query('meraki_response[?name==`NETWORK NAME HERE`].id') | join(', ') }}"
+        #The Network Name is Case Sensitive
