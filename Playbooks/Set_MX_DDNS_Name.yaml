@@ -1,0 +1,12 @@
+---
+# Notes:
+# This play will let you set the DDNS URL for a Network to something of your choice, just change the value of the prefix
+- hosts: meraki_servers
+  gather_facts: false
+  tasks:
+    - name: Set Network DDNS Info
+      cisco.meraki.networks_appliance_settings:
+        dynamicDns:
+          enabled: true
+          prefix: my-new-dns-name-here
+        networkId: L_################

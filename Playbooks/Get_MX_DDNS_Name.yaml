@@ -1,4 +1,7 @@
 ---
+# Notes:
+# This play will get the DDNS names for the Active URL, you can change the result filtering to also show WAN1 and WAN2 IPs
+# This would be useful if you need to get the IPs or a DNS name for each WAN to input into another platform
 - hosts: localhost
   gather_facts: false
   tasks:

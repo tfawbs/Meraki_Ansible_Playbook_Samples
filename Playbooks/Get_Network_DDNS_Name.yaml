@@ -1,0 +1,14 @@
+---
+# Notes:
+# This play will get the DDNS URL of a Network when provided with the Network ID
+- hosts: meraki_servers
+  gather_facts: false
+  tasks:
+    - name: Get Network Appliance Info
+      cisco.meraki.networks_appliance_settings_info:
+        networkId: L_############
+      register: result
+
+    - name: Show Network DDNS URL
+      ansible.builtin.debug:
+        msg: "{{ result | json_query('meraki_response.dynamicDns.url') }}"
