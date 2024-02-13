@@ -1,0 +1,14 @@
+---
+# Notes: 
+# This play is designed to get the management interface information
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Query management information
+      cisco.meraki.devices_management_interface_info:
+        serial: Q312-3456-ABCD
+      register: result
+
+    - name: Show Results
+      ansible.builtin.debug:
+        msg: "{{ result }}"

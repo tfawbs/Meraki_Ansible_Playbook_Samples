@@ -1,0 +1,85 @@
+---
+# Notes: 
+# This playbook is designed to get variables listed in the start or you could use a file then create VLANs
+# It is totally changeable, there are many ways to achieve this
+- hosts: localhost
+  gather_facts: false
+  vars:
+    nid: L_############### #Enter your network ID here
+    mgmt_subnet: 192.168.1
+    user_subnet: 10.0.10
+    print_subnet: 10.0.20
+    CorpWiFi_subnet: 10.0.30
+ 
+  tasks:
+    - name: Enable Vlans on the MX
+      cisco.meraki.networks_appliance_vlans_settings:
+        state: present
+        networkId: "{{ nid }}"
+        vlansEnabled: true
+
+    - name: Create Management Subnet
+      cisco.meraki.networks_appliance_vlans:
+        state: present
+        applianceIp: "{{ mgmt_subnet }}.1"
+        cidr: "{{ mgmt_subnet }}.0/24"
+        id: '1'
+        vlanId: 1
+        name: Management
+        networkId: "{{ nid }}"
+        subnet: "{{ mgmt_subnet }}.0/24"
+
+    - name: Create User Subnet
+      cisco.meraki.networks_appliance_vlans:
+        state: present
+        vlanId: 10
+        id: '10'
+        applianceIp: "{{ user_subnet }}.1"
+        cidr: "{{ user_subnet }}.0/24"
+        name: Users
+        networkId: "{{ nid }}"
+        subnet: "{{ user_subnet }}.0/24"
+
+    - name: Create Printer Subnet
+      cisco.meraki.networks_appliance_vlans:
+        state: present
+        id: '20'
+        vlanId: 20
+        applianceIp: "{{ print_subnet }}.1"
+        cidr: "{{ print_subnet }}.0/24"
+        name: Printers
+        networkId: "{{ nid }}"
+        subnet: "{{ print_subnet }}.0/24"
+
+    - name: Create Wireless Corporate Subnet
+      cisco.meraki.networks_appliance_vlans:
+        state: present
+        applianceIp: "{{ CorpWiFi_subnet }}.1"
+        cidr: "{{ CorpWiFi_subnet }}.0/24"
+        id: '100'
+        vlanId: 100
+        name: Corp Wireless
+        networkId: "{{ nid }}"
+        subnet: "{{ CorpWiFi_subnet }}.0/24"
+
+    - name: Create Wireless Mobile Subnet
+      cisco.meraki.networks_appliance_vlans:
+        state: present
+        applianceIp: 10.10.220.1
+        cidr: 10.10.220.0/24
+        id: '200'
+        vlanId: 200
+        name: Mobile Wireless
+        networkId: "{{ nid }}"
+        subnet: 10.10.220.0/24
+
+    - name: Create Wireless Guest Subnet
+      cisco.meraki.networks_appliance_vlans:
+        state: present
+        applianceIp: 10.10.230.1
+        cidr: 10.10.230.0/24
+        id: '300'
+        vlanId: 300
+        name: Guest Wireless
+        networkId: "{{ nid }}"
+        subnet: 10.10.230.0/24
