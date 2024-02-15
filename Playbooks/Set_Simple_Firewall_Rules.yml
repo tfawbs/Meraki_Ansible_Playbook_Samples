@@ -1,0 +1,42 @@
+---
+- hosts: localhost
+  gather_facts: false
+  vars:
+    network_id: "L_#############"
+  tasks:
+    - name: Create FW outbound L3 rules
+      cisco.meraki.networks_appliance_firewall_l3_firewall_rules:
+        networkId: "{{ network_id }}"
+        state: present
+        rules:
+          - comment: Block internetbadguys.com
+            destCidr: internetbadguys.com
+            destPort: any
+            policy: deny
+            protocol: any
+            srcCidr: any
+            syslogEnabled: false
+          - comment: Block Google DNS
+            destCidr: 8.8.8.8/32
+            destPort: any
+            policy: deny
+            protocol: any
+            srcCidr: any
+            syslogEnabled: false            
+          - comment: Block Guest LAN to User VLAN
+            destCidr: 192.168.20.0/24
+            destPort: any
+            policy: deny
+            protocol: any
+            srcCidr: 10.100.30.0/24
+            syslogEnabled: false
+
+    - name: Create FW L7 rules 
+      cisco.meraki.networks_appliance_firewall_l7_firewall_rules:
+        networkId: "{{ network_id }}"
+        rules:
+        - policy: deny
+          type: applicationCategory
+          value: 
+            name: Sports
+            id: meraki:layer7/category/5
