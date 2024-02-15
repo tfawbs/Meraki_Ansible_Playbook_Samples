@@ -1,4 +1,8 @@
 ---
+# Notes: 
+# This play adds firewall rules as listed in order to the network ID specified in the variables
+# CAUTION: It is very important to note this play is NOT idempotent!
+# i.e. it will overwrite the rules in the network with those listed in the play each time
 - hosts: localhost
   gather_facts: false
   vars:
