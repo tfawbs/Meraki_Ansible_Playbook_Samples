@@ -1,0 +1,13 @@
+---
+# Notes: This playbook will set SNMP Settings for a Network specified
+- hosts: localhost
+  tasks:
+    - name: Set SNMP Settings
+      cisco.meraki.networks_snmp:
+        networkId: L_########
+        access: users
+        users:
+        - username: Solarwinds
+          passphrase: <removed>
+        - username: Node1
+          passphrase: secret
