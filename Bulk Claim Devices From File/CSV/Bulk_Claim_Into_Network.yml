@@ -1,0 +1,18 @@
+---
+# Notes: This play is to get a list of serials from a CSV file and then use that to claim each serial into a network
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Read data from a CSV file
+      community.general.read_csv:
+        path: devices.csv
+        key: id
+      register: csvdata
+
+    - name: Claim Device into the Network
+      cisco.meraki.networks_devices_claim:
+        meraki_output_log: true
+        networkId: L_##########
+        serials: "{{ item.value.serial }}"
+      loop: "{{ csvdata.dict | dict2items }}" 
