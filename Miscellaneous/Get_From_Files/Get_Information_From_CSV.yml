@@ -1,3 +1,5 @@
+---
+# Notes: This playbook is to show you an example of how you can use CSV files to get information, like a list of Serial numbers to use in later plays
 - hosts: localhost
   gather_facts: false
 
