@@ -1,0 +1,20 @@
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Read data from a CSV file
+      community.general.read_csv:
+        path: devices.csv
+        key: id
+      register: csvdata
+
+# The following gets for just one line in the CSV with the ID Device-1
+    - name: Access variables for ID device-1
+      debug:
+        msg: "{{ csvdata.dict['device-1'].serial }}"
+
+# The following loops the list
+    - name: Access Variables from CSV
+      debug:
+        msg: "{{ item.value.serial }}"
+      loop: "{{ csvdata.dict | dict2items }}"

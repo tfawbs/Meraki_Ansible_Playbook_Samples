@@ -1,0 +1,16 @@
+---
+# Notes: This playbook is to show you an example of how you can use YAML files to get information, like a list of Serial numbers to use in later plays
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Include vars of devices.yaml into the 'devices' variable 
+      include_vars:
+        file: devices.yaml
+        name: devices
+
+# The following loops the list
+    - name: Access Variables from YML
+      debug:
+        msg: "{{ item.value.serial_no }}"
+      loop: "{{ lookup('dict', devices) }}"
