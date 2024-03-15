@@ -1,7 +1,7 @@
 ---
 # Notes: 
 # The playbook can't make changes if the device is using DHCP for IP assignment, it will just run and report success
-# Works by imports the serial numbers of devices to use from a devices.yaml file
+# Works by importing the serial numbers of devices to use from a devices.yaml file
 
 - hosts: localhost
   gather_facts: false

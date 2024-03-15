@@ -1,0 +1,27 @@
+---
+# Notes: 
+# The playbook can't make changes if the device is using DHCP for IP assignment, it will just run and report success
+# Works by importing the serial numbers of devices to use from a devices.csv file
+
+- hosts: localhost
+  gather_facts: false
+  vars:
+    org_id: "#######"
+  tasks:
+    - name: Read data from a CSV file
+      community.general.read_csv:
+        path: devices.csv
+        key: id
+      register: csvdata
+
+    - name: Change DNS management information
+      cisco.meraki.devices_management_interface:
+        state: present
+        serial: "{{ item.value.serial }}"
+        wan1:
+          staticDns:
+          - 192.168.20.2
+#          - 8.8.8.8
+      loop: "{{ csvdata.dict | dict2items }}"
+
+
