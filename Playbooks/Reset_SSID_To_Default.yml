@@ -1,0 +1,16 @@
+---
+# Notes: 
+# This play is designed to set an SSID slot (identified by number) to the detaults and disabled
+# Make sure to change Number and Name per SSID to change
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Set SSID to Default
+      cisco.meraki.networks_wireless_ssids:
+        state: present
+        enabled: false
+        name: Unconfigured SSID 1
+        networkId: L_#######
+        number: 0
+        ipAssignmentMode: NAT mode
+        authMode: open
