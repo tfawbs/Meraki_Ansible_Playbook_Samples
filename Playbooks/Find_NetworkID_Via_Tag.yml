@@ -1,0 +1,32 @@
+---
+# Notes: This playbook is designed to get the Network ID's of networks with a specific tag by prompting you for your Org ID 
+# the tag name that networks are tagged with
+- hosts: localhost
+  gather_facts: false
+
+  vars_prompt:
+    - name: "org_id"
+      prompt: "What is the Org ID"
+#      default: "#######"
+      private: no
+    - name: "search_tag"
+      prompt: "What is the Tag to Search for"
+      default: "Home"
+      private: no
+
+  tasks:
+    - name: Get all networks
+      cisco.meraki.networks_info:
+        organizationId: "{{ org_id }}"
+      register: result
+
+    - name: Search for the tag and get the ID list
+      ansible.builtin.set_fact:
+        matching_ids: "{{ result.meraki_response | community.general.json_query(tag_query) }}"
+      vars:
+        tag_query: "[?tags.contains(@, `{{ search_tag }}`)].id"
+
+    - name: Show the ID list for the given tag as a JSON list
+      ansible.builtin.debug:
+        msg: "{{ matching_ids }}"
+      when: matching_ids | length > 0
