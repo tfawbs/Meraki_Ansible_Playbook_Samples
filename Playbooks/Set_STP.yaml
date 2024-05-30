@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Set STP Value on Single Switch
+      cisco.meraki.networks_switch_stp:
+        networkId: L_#################
+        rstpEnabled: true
+        stpBridgePriority:
+        - stpPriority: 0
+          switches:
+          - Q2##-####-####
+          stpPriority: 4096
