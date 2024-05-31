@@ -1,0 +1,13 @@
+---
+# Notes: This playbook will set a webhook server in a Network
+---
+- hosts: localhost
+  tasks:
+    - name: Set a new Webhook URL
+      cisco.meraki.networks_webhooks_http_servers:
+        url: https://myservice.com/v1/webhooks/incoming/WUyYWM0
+        name: MyService
+        networkId: L_#################
+        payloadTemplate:
+          payloadTemplateId: wpt_00002 #TemplateID's can be found in Ansible Documentation
+        sharedSecret: shhhsecret
