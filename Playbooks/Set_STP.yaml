@@ -1,4 +1,6 @@
 ---
+# Notes: This playbook will set the STP settings for a switch, you can do multiple switches, see Ansible Meraki module documentation for more details
+---
 - hosts: localhost
   tasks:
     - name: Set STP Value on Single Switch

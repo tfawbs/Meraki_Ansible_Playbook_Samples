@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Set a new Webhook URL
+      cisco.meraki.networks_webhooks_http_servers:
+        url: https://webexapis.com/v1/webhooks/incoming/Y2lzY29zcGFyazovL3VzL1dFQkhPT0svOTBlNGI4NjktMzA1Yi00OGRjLTlhNTYtMWMyNDY5OWUyYWM0
+        name: Webex-Ansible
+        networkId: L_819655132181440558
+        payloadTemplate:
+          payloadTemplateId: wpt_00002
+        sharedSecret: shhhsecret
