@@ -1,0 +1,44 @@
+---
+# Notes: This playbook will set a webhook server in a Network, get the ID for that server and then set some Alerting values for it in the Network Alerts
+# Debugging outputs are also provided for greater visablity
+- hosts: localhost
+  tasks:
+    - name: Create the Network Webhook Server entry
+      cisco.meraki.networks_webhooks_http_servers:
+        networkId: L_#################
+        name: Webex_Ansible_Test
+        url: https://webexapis.com/v1/webhooks/incoming/TESTSTRINGGOESHERE2/
+        payloadTemplate:
+          payloadTemplateId: wpt_00002
+ 
+    - name: Get the Networks Webhook HTTP Servers and Register to the value webhookreturnid
+      cisco.meraki.networks_webhooks_http_servers_info:
+        networkId: L_#################
+      register: webhookreturnid
+
+    - name: Print the webhookreturnid Data for debugging
+      debug:
+        msg: "{{ webhookreturnid }}"
+
+    - name: Set the webhook server id fact to use in the alerts setting task
+      set_fact:
+        webhookid: "{{ webhookreturnid | json_query('meraki_response[*].id') | join('') }}"
+
+    - name: Print webhookid ID for debugging
+      debug:
+        msg: "{{ webhookid }}"
+ 
+    - name: Set the Alert Setting 
+      cisco.meraki.networks_alerts_settings:
+        networkId: L_#################
+        alerts:
+        - alertDestinations:
+            allAdmins: false
+            httpServerIds:
+            - "{{ webhookid }}"
+            snmp: true
+          enabled: true
+          filters:
+            timeout: 60
+          type: gatewayDown
+ 
