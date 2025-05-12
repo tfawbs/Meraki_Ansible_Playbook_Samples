@@ -1,13 +1,13 @@
 ---
-# Notes: This task will enable the MX as a spoke 
+# Notes: This task will will enable the a network as a spoke 
 - hosts: localhost
   gather_facts: false
   tasks:
-    - name: Enable As Spoke
+    - name: Enable the Spoke
       cisco.meraki.networks_appliance_vpn_site_to_site_vpn:
         state: present
         hubs:
-        - hubId: L_######-HUB-NETWORK-ID-######
+        - hubId: L_################HUB##
         mode: spoke
-        networkId: L_###############
+        networkId: L_##############SPOKE##
       # The hubId value is just the Network ID of the network with the hub in it (it can be L_### or N_###)

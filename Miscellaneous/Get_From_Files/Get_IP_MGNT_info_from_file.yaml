@@ -1,0 +1,20 @@
+---
+# Tested Working NUC 8th May 2025 
+# This playbook works by importing the serial numbers of devices to check from a devices.yaml file
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Get the contents of devices.yaml and put into the 'devices' variable
+      include_vars:
+        file: devices.yaml
+        name: devices
+
+    - name: Loop & Query management information from devices variable
+      cisco.meraki.devices_management_interface_info:
+        serial: "{{ item.value.serial_no }}"
+      register: result
+      loop: "{{ lookup('dict', devices) }}"
+
+    - name: Show Results
+      ansible.builtin.debug:
+        msg: "{{ result }}"

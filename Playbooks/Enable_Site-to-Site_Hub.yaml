@@ -1,0 +1,10 @@
+---
+# Notes: This playbook will enable the a network as a hub
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Enable the Hub
+      cisco.meraki.networks_appliance_vpn_site_to_site_vpn:
+        state: present
+        mode: hub
+        networkId: L_################## #Update this with your desired Network ID to become the hub

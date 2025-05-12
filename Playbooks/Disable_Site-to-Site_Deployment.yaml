@@ -1,0 +1,16 @@
+---
+# Notes: This playbook will disable a spoke then disable a hub, you could do a loop and list many networks from a file in the spokes task
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Disbale Spokes
+      cisco.meraki.networks_appliance_vpn_site_to_site_vpn:
+        state: present
+        mode: none
+        networkId: L_################## #Update with the Network ID of your Spokes
+
+    - name: Disable Hubs
+      cisco.meraki.networks_appliance_vpn_site_to_site_vpn:
+        state: present
+        mode: none
+        networkId: L_################## #Update with the Network ID of your Hub
