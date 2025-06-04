@@ -39,8 +39,20 @@
       cisco.meraki.networks_appliance_firewall_l7_firewall_rules:
         networkId: "{{ network_id }}"
         rules:
-        - policy: deny
-          type: applicationCategory
-          value: 
-            name: Sports
-            id: meraki:layer7/category/5
+          - policy: deny
+            type: applicationCategory
+            value: 
+              id: meraki:layer7/category/5
+              name: sports
+          - policy: deny
+            type: host
+            value: google.com
+          - policy: deny
+            type: port
+            value: '23'
+          - policy: deny
+            type: ipRange
+            value: 10.11.12.00/24
+          - policy: deny
+            type: ipRange
+            value: 10.11.12.00/24:5555
