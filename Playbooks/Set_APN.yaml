@@ -1,0 +1,29 @@
+---
+# Notes: 
+# This play is designed to set the APN settings on an MX or MG
+# CAUTION: The APN settings are OVERWRITTEN each apply so must be fully populated with all details
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Update APN for SIM1 on the target Serial
+      cisco.meraki.devices_cellular_sims:
+        meraki_api_key: "{{ meraki_api_key }}"
+        state: present
+        serial: Q2##-####-####
+        simFailover:
+            enabled: false
+            timeout: 300
+        simOrdering:
+            - sim1
+        sims:
+          - apns:
+              - allowedIpTypes:
+                  - ipv4
+                authentication:
+                  type: pap
+                  username: awesome_ansible
+                  password: my_password
+                name: "internet.ansible.cellprovider"
+            isPrimary: true
+            simOrder: 1
+            slot: sim1
