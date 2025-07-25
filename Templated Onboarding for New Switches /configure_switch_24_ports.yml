@@ -1,0 +1,292 @@
+---
+# This playbook configures a standard 24 port template switch, ie 
+# Port 1 always connects to the upstream Router 
+# Port 2 always connects to the AP
+# Port 3 always connects to the Printer, and so on
+
+    - name: Configure switch Port1
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: "Uplink to Gateway RW"
+        type: trunk
+        vlan: 1
+        portId: 1
+
+    - name: Configure switch Port2
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: "Link to Access Point"
+        type: trunk
+        vlan: 1
+        allowedVlans: 1,20,10
+        portId: 2
+
+    - name: Configure switch Port3
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: POS Printer
+        type: access
+        vlan: 20
+        portId: 3
+
+    - name: Configure switch Port4
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office Printer
+        type: access
+        vlan: 20
+        portId: 4
+
+    - name: Configure switch Port5
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: PoS Terminal
+        type: access
+        vlan: 10
+        portId: 5
+
+    - name: Configure switch Port6
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 6
+
+    - name: Configure switch Port7
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Sales User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 7
+
+    - name: Configure switch Port8
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Sales PC Access Only
+        type: access
+        vlan: 10
+        portId: 8
+
+    - name: Configure switch Port9
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User Access
+        type: access
+        vlan: 10
+        portId: 9
+
+    - name: Configure switch Port10
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Downstream Trunk Port
+        type: trunk
+        vlan: 1
+        allowedVlans: 1,20,5-10
+        portId: 10
+
+    - name: Configure switch Port11
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 11
+
+    - name: Configure switch Port12
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 12
+
+    - name: Configure switch Port13
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 13
+
+    - name: Configure switch Port14
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 14
+
+    - name: Configure switch Port15
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 15
+
+    - name: Configure switch Port16
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 16
+
+    - name: Configure switch Port17
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 17
+
+    - name: Configure switch Port18
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 18
+
+    - name: Configure switch Port19
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 19
+
+    - name: Configure switch Port20
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 20
+        enabled: false
+
+    - name: Configure switch Port21
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present         
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access 
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 21
+        enabled: false
+
+    - name: Configure switch Port22
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present         
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access 
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 22
+        enabled: false
+
+    - name: Configure switch Port23
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present         
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access 
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 23
+        enabled: false
+
+    - name: Configure switch Port24
+      cisco.meraki.devices_switch_ports:
+        meraki_api_key: "{{ meraki_api_key }}"
+        meraki_suppress_logging: true
+        state: present
+        serial: "{{ switch_serial }}"
+        name: Office User+Phone Access
+        type: access
+        vlan: 10
+        voiceVlan: 11
+        portId: 24
+        enabled: false

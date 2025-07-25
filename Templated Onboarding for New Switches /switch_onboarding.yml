@@ -1,0 +1,50 @@
+---
+# This script is designed to onboard a switch into a network and configure the switch off a template playbook
+# It works by calling a cookie cutter playbook based on the number of ports that switch has.
+# An alternative stating point might be to use cisco.meraki.organizations_inventory_devices_info module
+# That module will return the model and current network of a switch if you wanted to take action on already onboarded switches.
+
+- name: Switch Onboarding
+  hosts: localhost
+  gather_facts: false
+  vars:
+    meraki_api_key: ENTER-YOUR-API-KEY-HERE
+    switch_serial: "Q234-5678-90AB"
+    target_network_id: "L_#################" 
+    org_id: "#################" 
+
+  tasks:
+    - name: Claim Switch into the Network
+      cisco.meraki.networks_devices_claim:
+        meraki_api_key: "{{ meraki_api_key }}"
+        networkId: "{{ target_network_id }}"
+        serials:
+        - "{{ switch_serial }}"
+      ignore_errors: yes
+
+    - name: Get switch details by serial
+      cisco.meraki.devices_info:
+        meraki_api_key: "{{ meraki_api_key }}"
+        serial: "{{ switch_serial }}"
+      register: switch_info
+
+    - name: Set port count fact
+      ansible.builtin.set_fact:
+        port_count: "{{ (switch_info.meraki_response['model'] | regex_findall('-(\\d+)P'))[0] | int }}"
+      when: switch_info.meraki_response['model'] is defined
+
+    - name: Debug port count
+      ansible.builtin.debug:
+        var: port_count
+
+    - name: Include 8-port config
+      ansible.builtin.include_tasks: configure_switch_8_ports.yml
+      when: port_count | int == 8
+
+    - name: Include 24-port config
+      ansible.builtin.include_tasks: configure_switch_24_ports.yml
+      when: port_count | int == 24
+
+    - name: Include 48-port config
+      ansible.builtin.include_tasks: configure_switch_48_ports.yml
+      when: port_count | int == 48
