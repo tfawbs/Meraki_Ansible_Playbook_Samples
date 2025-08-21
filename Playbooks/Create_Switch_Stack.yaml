@@ -1,0 +1,38 @@
+---
+# This script is designed to claim switches into an Inventory and create a switch stack in a Meraki network using Ansible.
+# Review the process for setting up a Switch Stack in Meraki Documentation.
+# This playbook has been tested with MS Classic Switches.
+# New Factory Firmware switches may require the Active member as the uplink member at first to update firmware and come online
+
+- name: Create Meraki Switch Stack
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+    meraki_api_key: ENTER-YOUR-API-KEY-HERE
+    network_id: ENTER-YOUR-NETWORK-ID-HERE
+    stack_name: Awesome_Ansible # Update the Name of the switch stack
+    # Add your switch serials here - replace with actual serials
+    switch_serials:
+      - "Q123-4567-890A"  # Replace with actual switch serial 1
+      - "Q123-4567-890B"  # Replace with actual switch serial 2
+      # Add more serials as needed for larger stacks
+
+  tasks:
+    - name: Claim Switches to Network Inventory
+      cisco.meraki.networks_devices_claim:
+        meraki_api_key: "{{ meraki_api_key }}"
+        networkId: "{{ network_id }}"
+        serials: "{{ switch_serials }}"
+
+    - name: Create Switch Stack
+      cisco.meraki.networks_switch_stacks:
+        meraki_api_key: "{{ meraki_api_key }}"
+        state: present
+        networkId: "{{ network_id }}"
+        name: "{{ stack_name }}"
+        serials: "{{ switch_serials }}"
+
+# For new stacks I would recommend adding the module cisco.meraki.networks_switch_stacks_info
+# And the debug module to output which member is the Active member
+# This will help you identify which switch should be connected to the uplink when you physically deploy
